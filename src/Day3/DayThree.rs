@@ -1,7 +1,6 @@
-use std::{
-    cmp::max,
-    u32::{MAX, MIN},
-};
+use std::{cmp::max, time::Instant, u32::MIN};
+
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn parse_input() -> Vec<String> {
     let contents = std::fs::read_to_string("Input/DayThree.txt").unwrap();
@@ -69,7 +68,6 @@ fn find_max_twelve_digit_number(num: &String) -> u128 {
                 tmp = j as u128;
             }
         }
-        println!("mx = {}, pos = {}", mx, tmp);
         positions.push(tmp);
         tmp += 1;
         start_location = tmp as usize;
@@ -93,10 +91,22 @@ pub fn part1() {
 pub fn part2() {
     let input = parse_input();
     let mut ans: u128 = 0;
-    for i in input {
+    let start = Instant::now();
+    for i in &input {
         let k = find_max_twelve_digit_number(&i);
-        println!("{}", k);
         ans += k;
     }
-    println!("ans = {}", ans);
+
+    let duration = start.elapsed();
+    let start_parrralel = Instant::now();
+    let an: u128 = input
+        .par_iter()
+        .map(|x| {
+            return find_max_twelve_digit_number(&x);
+        })
+        .sum();
+
+    let an_duration = start_parrralel.elapsed();
+    println!("ans = {} , duration = {:?}", ans, duration);
+    println!("an  = {} , duration = {:?}", an, an_duration);
 }

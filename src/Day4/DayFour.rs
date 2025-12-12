@@ -56,8 +56,9 @@ pub fn part2() {
         grid.push(base_vec);
     }
     let mut ans = 0;
-    let nothing: bool = false;
+    let mut nothing: bool = false;
     while !nothing {
+        nothing = true;
         for i in 0..139 {
             for j in 0..139 {
                 if grid[i][j] == '@' {
@@ -73,6 +74,7 @@ pub fn part2() {
                         }
                     }
                     if count < 4 {
+                        nothing = false;
                         ans += 1;
                         grid[i][j] = '.';
                     }

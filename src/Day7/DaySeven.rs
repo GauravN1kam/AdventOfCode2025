@@ -37,7 +37,7 @@ pub fn read_input() -> Vec<Vec<i8>> {
 }
 
 fn is_valid_pos(array: &Vec<Vec<i8>>, posx: usize, posy: usize) -> bool {
-    if posx < array.len() && posx >= 0 && posy < array[0].len() && posy >= 0 {
+    if posx < array.len() && posy < array[0].len() {
         return true;
     }
     false
